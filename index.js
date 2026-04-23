@@ -37,15 +37,12 @@ db.getConnection((err, connection) => {
   }
 });
 
-app.get("/clientes", (req, res) => {
+
+ app.get("/clientes", (req, res) => {
   db.query("SELECT id, nombre, telefono, email FROM clientes", (err, result) => {
     if (err) {
-      console.error("Error en consulta:", err); // 👈 log completo
-      return res.status(500).json({ 
-        error: err.message,
-        code: err.code,
-        sql: err.sql
-      });
+      console.error("Error completo:", JSON.stringify(err));
+      return res.status(500).json(JSON.parse(JSON.stringify(err)));
     }
     res.json(result);
   });
