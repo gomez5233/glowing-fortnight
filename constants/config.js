@@ -1,0 +1,1 @@
+export const API_URL = "https://glowing-fortnight-production.up.railway.app";
