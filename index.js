@@ -48,6 +48,23 @@ db.getConnection((err, connection) => {
   });
 });
 
+app.post("/clientes", (req, res) => {
+  const { nombre, telefono, email } = req.body;
+
+  if (!nombre || !telefono || !email) {
+    return res.status(400).json({ error: "Todos los campos son obligatorios" });
+  }
+
+  db.query(
+    "INSERT INTO clientes (nombre, telefono, email) VALUES (?, ?, ?)",
+    [nombre, telefono, email],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ mensaje: "Cliente agregado correctamente", id: result.insertId });
+    }
+  );
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
